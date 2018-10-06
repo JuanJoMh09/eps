@@ -1,5 +1,6 @@
-const express = require('express')
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const passport = require('passport');
 
 const app = express();
 
@@ -12,14 +13,18 @@ const post = require('./routes/api/post');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+//Passport middleware
+app.use(passport.initialize());
+
+//Passport Config
+require('./config/passport')(passport);
+
 //CORS
 
 // rutas
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/post', post);
-app.get('/', (req, res) => res.send('Hello there!'));
-
 
 
 
